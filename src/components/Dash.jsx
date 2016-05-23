@@ -1,16 +1,7 @@
-class Dash extends React.Component {
-  constructor(props) {
-    super(props);
-  };
+var Dash = props => (
+  <div>
+    <Search searchVal={ props.searchVal } changeE={ props.changeE } submitE={ props.submitE }/>
+  </div>
+);
 
-  render() {
-    return (
-      <div>
-        <form>
-          <input/>
-          <button></button>
-        </form>
-      </div>
-    );
-  }
-};
+window.Dash = Dash;
