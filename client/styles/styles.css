@@ -1,3 +1,35 @@
+/* Article Styling */
 .article {
-  width: 80%;
+  width: 50%;
+  margin: 0 auto 0 20%;
 }
+
+.article-details {
+
+}
+
+.head-image {
+
+}
+
+.text {
+  margin-top: 60px;
+
+  white-space: pre-wrap;
+  line-height: 2.0;
+  font-size: 1.3em;
+}
+
+/* Annotation Styling */
+#controlBox {
+  position: absolute;
+  visibility: hidden;
+}
+
+
+/* Collection Styling */
+
+
+
+
+/* Collection Item Styling */

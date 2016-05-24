@@ -4,6 +4,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const extractor = require('unfluff');
 const request = require('request');
+const utils = require('./utils/config-helpers.js')
 // const multer = require('multer');
 
 const app = express();
@@ -28,7 +29,10 @@ app.post('/saveArticle', function(req, res, next) {
     if (err) { return res.sendStatus(500); }
 
     let data = extractor(body);
-    // console.log(data);
+
+    //replace \n with '<br>'
+    // data.text = utils.sourceToHTML(data.text);
+    // console.log(data.text);
 
     //save article content to db
 

@@ -3,9 +3,18 @@ class App extends React.Component {
     super(props);
     this.state = {
       currentPageHome: true,
-      articleContent: {}
+      articleContent: {},
+      noteStatus: {},
+      articleAnnotations: [],
+      articleNotes: []
     };
   };
+
+  componentDidMount() {
+    window.addEventListener('keydown',
+     e => this.createNoteHandler(e)
+     , false);
+  }
 
   changePageHandler() {
     // let val = !this.state.currentPageHome;
@@ -16,20 +25,89 @@ class App extends React.Component {
     this.setState({ articleContent: content });
   }
 
+  controllerHandler(e) {
+    let sel = window.getSelection();
+    let range = sel.focusOffset - sel.anchorOffset;
+    let controlBox = document.getElementById('controlBox');
+
+    console.log(sel);
+    console.log('range: ', range);
+    console.log('mouse X: ', e.clientX + 'px', ' mouse Y: ', e.clientY + 'px');
+
+    this.setState({ noteStatus:
+      {
+        top: e.clientY,
+        left: e.clientX,
+        sel: sel,
+        range: range
+      }
+    });
+
+    //if a selection is made
+    if ( range !== 0 ) {
+      //create a controlBox element
+      controlBox.style.top = e.clientY + 'px';
+      controlBox.style.left = e.clientX + 'px';
+      controlBox.style.visibility = 'visible';
+
+      //save annotation to db
+    } else {
+      controlBox.style.visibility = 'hidden';
+       }
+
+  }
+
+  createNoteHandler(e) {
+    //if viewing article
+    if ( !this.state.currentPageHome ) {
+      //'n' key is pressed
+      if ( e.which === 78 ) {
+        console.log('create new note')
+        //create new note w/ top and left values
+        this.setState({ articleNotes: this.state.articleNotes.concat(
+          [<Note attributes={this.state.noteStatus} />]
+        )})
+        console.log(this.state.articleNotes);
+      } else if ( e.which === 72 && this.state.noteStatus.range !== 0 ) { //'h' key is pressed
+        console.log('highlight selected text')
+      } else if ( e.which === 9 && this.state.noteStatus.range !== 0 ) { //'tab' key is pressed
+        console.log('create new note && highlight')
+      }
+    }
+  }
+
   render() {
     if (this.state.currentPageHome) {
       return (
         <div>
           <Home changePage={this.changePageHandler.bind(this)}
-          getContent={this.getContentHandler.bind(this)}
-           pageIsHome={this.state.currentPageHome}
-           content={this.state.articleContent} />
+            getContent={this.getContentHandler.bind(this)}
+            pageIsHome={this.state.currentPageHome}
+            content={this.state.articleContent} />
         </div>)
     }
+      //if controlBox is defined render it
+    // } else if (this.state.controlBox) {
+    //   console.log('rendering ControlBox');
+    //   console.log(this.state.controlBox);
+    //   return (
+    //     <div>
+    //       <Article makeAnnotation={this.annotationHandler.bind(this)}
+    //       content={this.state.articleContent} />
+
+    //       <ControlBox stylesheet={this.state.controlBox} />
+    //     </div>
+    //   )
+
+    // }
       return (
         <div>
-          <Article content={this.state.articleContent} />
-        </div>)
-  }
+          <Article handleController={this.controllerHandler.bind(this)}
+            createNote={this.createNoteHandler.bind(this)}
+            content={this.state.articleContent} />
 
+          <ControlBox />
+        </div>
+      )
+    }
 };
