@@ -21,23 +21,22 @@ app.use('/compiled', express.static(__dirname + '/compiled'));
 app.use(express.static(__dirname + '/client'));
 
 
-
+//Routing
 app.post('/saveArticle', function(req, res, next) {
-  //request the url
+  //get article content
   request("http://www.bloomberg.com/features/2016-johny-srouji-apple-chief-chipmaker/", function( err, response, body) {
     if (err) { return res.sendStatus(500); }
 
     let data = extractor(body);
-    console.log(data);
-    res.sendStatus(200);
+    // console.log(data);
+
+    //save article content to db
+
+    //send file to React
+    res.status(201).send(data);
   });
 
-  //pass data to extractor
-  // console.log(req.body.url);
-
 });
-//get article content
-//save article content to db
 //build new document w/ article content
 //send user to new document
 
