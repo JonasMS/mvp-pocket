@@ -14,8 +14,11 @@ class Home extends React.Component {
       data: JSON.stringify({ url: url }),
       contentType: 'application/json',
       success: data => {
-        this.props.content = data;
-        console.log(this.props.content);
+        // console.log(this);
+        //pass article content
+        this.props.getContent(data);
+        //switch to Article view
+        this.props.changePage();
       },
       error: () => { 'error on POST'; }
     });
