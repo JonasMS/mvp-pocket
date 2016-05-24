@@ -1,12 +1,12 @@
 var Article = props => (
-  <div>
+  <div className="article">
     <h1>Article</h1>
-    <div> { props.content.title } </div>
-    <div> { props.content.author } </div>
-    <div> { props.content.date } </div>
-    <div> { props.content.publisher } </div>
-    <image src={props.content.image}/>
-    <div> { props.content.text } </div>
+    <div className="title"> { props.content.title } </div>
+    <div className="author"> { props.content.author } </div>
+    <div className="date"> { props.content.date } </div>
+    <div className="publisher"> { props.content.publisher } </div>
+    <image className="head-image" src={props.content.image}/>
+    <div className="text"> { props.content.text } </div>
   </div>
 );
 
