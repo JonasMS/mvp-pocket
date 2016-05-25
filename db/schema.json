@@ -1,5 +1,27 @@
 {
 
-  "migration_id": null
+  "migration_id": 2016052500072147,
+
+  "models": {
+
+    "Article": {
+
+      "table": "articles",
+
+      "columns": [
+        {"name": "id", "type": "serial", "properties": {"nullable":false,"primary_key":true,"auto_increment":true}},
+        {"name": "url", "type": "text", "properties": {}},
+        {"name": "title", "type": "text", "properties": {}},
+        {"name": "author", "type": "text", "properties": {}},
+        {"name": "data", "type": "text", "properties": {}},
+        {"name": "publisher", "type": "text", "properties": {}},
+        {"name": "text", "type": "text", "properties": {}},
+        {"name": "created_at", "type": "datetime", "properties": {}},
+        {"name": "updated_at", "type": "datetime", "properties": {}}
+      ]
+
+    }
+
+  }
 
 }

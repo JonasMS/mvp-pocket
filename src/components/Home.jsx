@@ -20,7 +20,7 @@ class Home extends React.Component {
         //switch to Article view
         this.props.changePage();
       },
-      error: () => { 'error on POST'; }
+      error: () => { console.log('error on POST'); }
     });
   }
 
@@ -45,7 +45,7 @@ class Home extends React.Component {
           <Dash searchVal={ this.state.searchVal } changeE={ this.searchValHandler.bind(this) } submitE={ this.submitSearchHandler.bind(this) } />
         </div>
         <div>
-          <Collection />
+          <Collection collection={this.props.collection}/>
         </div>
       </div>
     );

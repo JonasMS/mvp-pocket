@@ -25,7 +25,7 @@ app.use(express.static(__dirname + '/client'));
 //Routing
 app.post('/saveArticle', function(req, res, next) {
   //get article content
-  request("http://www.bloomberg.com/features/2016-johny-srouji-apple-chief-chipmaker/", function( err, response, body) {
+  request(req.body.url, function( err, response, body) {
     if (err) { return res.sendStatus(500); }
 
     let data = extractor(body);

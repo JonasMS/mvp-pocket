@@ -4,6 +4,7 @@
   margin: 0 auto 0 20%;
 }
 
+
 .article-details {
 
 }
@@ -24,6 +25,18 @@
 #controlBox {
   position: absolute;
   visibility: hidden;
+}
+
+.notesList {
+  position: absolute;
+  top: 0;
+  height: 100%;
+  width: 30%;
+  margin-left: 50%;
+}
+
+.note {
+  position: relative;
 }
 
 

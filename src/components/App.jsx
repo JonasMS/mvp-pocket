@@ -3,12 +3,25 @@ class App extends React.Component {
     super(props);
     this.state = {
       currentPageHome: true,
+      articleList: [],
       articleContent: {},
       noteStatus: {},
-      articleAnnotations: [],
       articleNotes: []
     };
   };
+
+  componentWillMount() {
+    //request articles from db
+    $.ajax({
+      method: 'GET',
+      url:'http://localhost:3000/v1/articles',
+      contentType: 'application/json',
+      success: data => {
+        this.setState({ articleList: data.data });
+      },
+      error: () => { console.log('error on GET'); }
+    });
+  }
 
   componentDidMount() {
     window.addEventListener('keydown',
@@ -30,9 +43,9 @@ class App extends React.Component {
     let range = sel.focusOffset - sel.anchorOffset;
     let controlBox = document.getElementById('controlBox');
 
-    console.log(sel);
-    console.log('range: ', range);
-    console.log('mouse X: ', e.clientX + 'px', ' mouse Y: ', e.clientY + 'px');
+    // console.log(sel);
+    // console.log('range: ', range);
+    // console.log('mouse X: ', e.clientX + 'px', ' mouse Y: ', e.clientY + 'px');
 
     this.setState({ noteStatus:
       {
@@ -50,11 +63,10 @@ class App extends React.Component {
       controlBox.style.left = e.clientX + 'px';
       controlBox.style.visibility = 'visible';
 
-      //save annotation to db
+      //TODO: save annotation to db
     } else {
       controlBox.style.visibility = 'hidden';
        }
-
   }
 
   createNoteHandler(e) {
@@ -65,7 +77,7 @@ class App extends React.Component {
         console.log('create new note')
         //create new note w/ top and left values
         this.setState({ articleNotes: this.state.articleNotes.concat(
-          [<Note attributes={this.state.noteStatus} />]
+          [this.state.noteStatus]
         )})
         console.log(this.state.articleNotes);
       } else if ( e.which === 72 && this.state.noteStatus.range !== 0 ) { //'h' key is pressed
@@ -82,6 +94,7 @@ class App extends React.Component {
         <div>
           <Home changePage={this.changePageHandler.bind(this)}
             getContent={this.getContentHandler.bind(this)}
+            collection={this.state.articleList}
             pageIsHome={this.state.currentPageHome}
             content={this.state.articleContent} />
         </div>)
@@ -103,6 +116,7 @@ class App extends React.Component {
       return (
         <div>
           <Article handleController={this.controllerHandler.bind(this)}
+            notes={this.state.articleNotes}
             createNote={this.createNoteHandler.bind(this)}
             content={this.state.articleContent} />
 

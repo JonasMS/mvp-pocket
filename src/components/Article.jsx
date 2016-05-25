@@ -10,6 +10,8 @@ var Article = props => (
     <image className="head-image" src={props.content.image}/>
 
     <pre className="text"> { props.content.text } </pre>
+
+    <Notes notes={props.notes} />
   </div>
 );
 
